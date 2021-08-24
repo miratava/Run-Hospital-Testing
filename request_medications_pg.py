@@ -1,5 +1,4 @@
 from navigation import Navigation
-import pytest
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import wait

@@ -1,12 +1,6 @@
-import pytest
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import wait
-#from browser import Browser
-#from datetime import datetime, timedelta
+#from selenium import webdriver
+#from selenium.webdriver.support import wait
 from selenium.webdriver.chrome.webdriver import WebDriver
-#from login_pg import LoginPage
 import time
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,18 +12,20 @@ class Navigation:
 
     def __init__(self, driver):
         self.driver = driver
-        #self.browser = Browser(driver)
 
-    def find_medication_menu_item(self):
-        xpath = "//a[@href='#/medication']"
+    def wait(self, xpath):
         WebDriverWait(self.driver, 10).until(expected_conditions.
             visibility_of_all_elements_located((By.XPATH, xpath)))
+        return
+    
+    def find_medication_menu_item(self):
+        xpath = "//a[@href='#/medication']"
+        self.wait(xpath)
         self.driver.find_element_by_xpath(xpath).click()
         
     def check_categories(self):
         xpath = "//div[@class='category-sub-items']/div/a"
-        WebDriverWait(self.driver, 10).until(expected_conditions.
-            visibility_of_all_elements_located((By.XPATH, xpath)))
+        self.wait(xpath)
         categories = self.driver.find_elements_by_xpath(xpath)
         category_names = ["Requests", "Completed", "New Request", "Return Medication"]
         for i in categories:
@@ -38,8 +34,7 @@ class Navigation:
 
     def logout(self):
         xpath = "//a[@class='settings-trigger ']"
-        WebDriverWait(self.driver, 10).until(expected_conditions.
-            visibility_of_all_elements_located((By.XPATH, xpath)))
+        self.wait(xpath)
         self.driver.find_element_by_xpath(xpath).click()
         time.sleep(3)
         self.driver.find_element_by_xpath("//a[@class='logout']").click()

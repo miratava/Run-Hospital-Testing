@@ -1,10 +1,10 @@
-from .base_pg import BasePage
+from selenium.webdriver.support import wait
 from .navigation import Navigation
 import random
 import time
 from datetime import datetime, timedelta
 from .locators import MedicationRequestLocator
-
+from .components import Record
 
 class NewMedicationRequestPage(Navigation):
 
@@ -14,8 +14,10 @@ class NewMedicationRequestPage(Navigation):
         
 
     def choose_visit(self):
+        self.wait(MedicationRequestLocator.LOCATOR_FIELD_VISIT)
         self.find_element(MedicationRequestLocator.LOCATOR_FIELD_VISIT).click()
         time.sleep(3)
+        #wait()
         dates = self.find_elements(MedicationRequestLocator.LOCATOR_VISITS_LIST)
         random.choice(dates[1:]).click()
         return
@@ -25,16 +27,22 @@ class NewMedicationRequestPage(Navigation):
         name_field = self.find_elements(MedicationRequestLocator.LOCATOR_FIELD_NAME)[0]
         time.sleep(9)
         name_field.send_keys(name)
-        self.wait(MedicationRequestLocator.LOCATOR_NAME_FROM_LIST)
-        self.driver.find_elements(MedicationRequestLocator.LOCATOR_NAME_FROM_LIST)[0].click()
+        self.wait(MedicationRequestLocator.LOCATOR_NAMES_LIST)
+        records = [Record(x) for x in self.find_elements(MedicationRequestLocator.LOCATOR_NAMES_LIST)]
+        for i in records:
+            if i.get_text() == name_in_db:
+                i.select()
+                break
+            else:
+                continue
         return
     
     def choose_medication(self, medication):
         self.wait(MedicationRequestLocator.LOCATOR_FIELD_MEDICATION)
         medication_field = self.find_elements(MedicationRequestLocator.LOCATOR_FIELD_MEDICATION)[1]
         medication_field.send_keys(medication)
-        portions = self.find_elements(MedicationRequestLocator.LOCATOR_MEDICATIONS_LIST)
-        random.choice(portions).click()
+        medication_portions = [Record(x) for x in self.find_elements(MedicationRequestLocator.LOCATOR_ITEMS_MEDICATION_LIST)]
+        random.choice(medication_portions).select()
         return
 
     def fill_prescription(self, text):
@@ -76,7 +84,7 @@ class NewMedicationRequestPage(Navigation):
         assert popup_text == "The medication record has been saved."
     
         is_cross_button = False
-        if self.find_element(MedicationRequestLocator.LOCATOR_CROSSBUTON):
+        if self.find_element(MedicationRequestLocator.LOCATOR_BUTTON_CROSS):
             is_cross_button = True
         assert is_cross_button == True
 

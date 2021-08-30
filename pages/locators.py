@@ -24,13 +24,9 @@ class NavigationLocator:
 
 
 class MedicationRequestLocator:
-    name_in_db = ''
-    medication = ''
     LOCATOR_FIELD_MEDICATION = (By.XPATH, "//label[contains(.,'Medication')]/following-sibling::div//input")
     LOCATOR_FIELD_NAME = (By.XPATH, "//input[@dir='auto']")
-    LOCATOR_NAME_FROM_LIST = (By.XPATH, "//div[@class='tt-suggestion tt-selectable' and contains( \
-                                .,'"+ name_in_db +"') and not(contains(.,'P03447'))]")
-    LOCATOR_MEDICATIONS_LIST = (By.XPATH, "//div[@class='tt-dataset tt-dataset-1']/div[contains(.,'"+ medication +"')]")
+    LOCATOR_NAMES_LIST = (By.CSS_SELECTOR, "div.tt-dataset-0 div")
     LOCATOR_FIELD_VISIT = (By.XPATH, "//select")
     LOCATOR_VISITS_LIST = (By.XPATH, "//select/option")
     LOCATOR_PRESCRIPTION = (By.XPATH, "//textarea")
@@ -41,5 +37,5 @@ class MedicationRequestLocator:
     LOCATOR_POPUP = (By.XPATH, "//div[@class='modal-body']")
     LOCATOR_BUTTON_CROSS = (By.XPATH, "//div[@class='modal-content']//button[@type='button']")
     LOCATOR_BUTTON_OK = (By.XPATH, "//div[@class='modal-content']//button[@class='btn btn-primary on-white ']")
-    
+    LOCATOR_ITEMS_MEDICATION_LIST = (By.CSS_SELECTOR, "div.tt-dataset-1 div")
    

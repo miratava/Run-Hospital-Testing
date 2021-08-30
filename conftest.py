@@ -1,4 +1,3 @@
-
 # conftest.py
 import pytest
 from selenium import webdriver
@@ -9,7 +8,6 @@ def pytest_addoption(parser):
 
 def get_driver(input_params):
         browsers = {"firefoxf": lambda : webdriver.Firefox(), "chrome": lambda : webdriver.Chrome()}
-        print(input_params['browser'])
         driver = browsers[input_params['browser']]()
         return driver
 

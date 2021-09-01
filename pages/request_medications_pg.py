@@ -25,12 +25,13 @@ class NewMedicationRequestPage(Navigation):
     def fill_name_field(self, name, name_in_db):
         self.wait(MedicationRequestLocator.LOCATOR_FIELD_NAME)
         name_field = self.find_elements(MedicationRequestLocator.LOCATOR_FIELD_NAME)[0]
-        time.sleep(9)
+        time.sleep(10)
         name_field.send_keys(name)
         self.wait(MedicationRequestLocator.LOCATOR_NAMES_LIST)
         records = [Record(x) for x in self.find_elements(MedicationRequestLocator.LOCATOR_NAMES_LIST)]
         for i in records:
             if i.get_text() == name_in_db:
+                print(i.get_text())
                 i.select()
                 break
             else:

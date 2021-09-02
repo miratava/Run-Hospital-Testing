@@ -1,8 +1,7 @@
-from .base_pg import BasePage
 from .locators import PatientsPageLocator
 from .navigation import Navigation
 from selenium.common.exceptions import NoSuchElementException
-
+import time
 
 class PatientsPage(Navigation):
 
@@ -13,6 +12,7 @@ class PatientsPage(Navigation):
 
     def find_title(self):
         try:
+            time.sleep(25)
             self.wait(PatientsPageLocator.LOCATOR_TITLE)
             return self.find_element(PatientsPageLocator.LOCATOR_TITLE).get_attribute('innerText')
         except:

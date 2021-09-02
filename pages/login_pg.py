@@ -10,7 +10,6 @@ class LoginPage(BasePage):
 
     def sign_in(self, login, password): 
         self.open(self.url)
-        input()
         self.wait(LoginPageLocator.LOCATOR_USERNAME_FIELD)
 
         self.find_element(LoginPageLocator.LOCATOR_USERNAME_FIELD).send_keys(login)

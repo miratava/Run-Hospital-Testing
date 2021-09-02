@@ -1,3 +1,4 @@
+import time
 from pages.login_pg import LoginPage
 from pages.navigation import Navigation
 from pages.request_medications_pg import NewMedicationRequestPage
@@ -12,6 +13,7 @@ def test_sign_in(login, password, params):
     patients_page = PatientsPage(driver)
     login_page = LoginPage(driver)
     login_page.sign_in(login, password)
+    time.sleep(600)
     title = patients_page.find_title()
     login_state = navigation.find_login_assert()    
     assert title == "Patient Listing"

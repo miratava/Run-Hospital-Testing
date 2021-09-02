@@ -13,7 +13,7 @@ def test_sign_in(login, password, params):
     patients_page = PatientsPage(driver)
     login_page = LoginPage(driver)
     login_page.sign_in(login, password)
-    time.sleep(600)
+    #time.sleep(600)
     title = patients_page.find_title()
     login_state = navigation.find_login_assert()    
     assert title == "Patient Listing"

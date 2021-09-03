@@ -42,8 +42,7 @@ def test_is_able_logout(login, password, params):
     assert login_page_header == "please sign in".upper()
     driver.close()
           
-@pytest.mark.parametrize( \
-    "login, password, name, name_in_db, medication, prescription, days_number", \
+@pytest.mark.parametrize("login, password, name, name_in_db, medication, prescription, days_number", \
     [("hr.doctor@hospitalrun.io", "HRt3st12", "Test Patient", "Test Patient - P00201", "Pramoxine", "Testing prescription", 1)])
 def test_request_new_medication(login, password, name, name_in_db, medication, prescription, days_number, params):
     driver = params

@@ -10,9 +10,10 @@ def pytest_addoption(parser):
     
 
 def get_chrome_options():
-    options = chrome.option.Options()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')  
+    options = chrome.options.Options()
+    #options.add_argument('--headless')
+    #options.add_argument('--disable-gpu')  
+    options.headles = True
     return options
 
 def get_firefox_option():

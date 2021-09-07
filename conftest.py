@@ -3,26 +3,32 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver import chrome
 from selenium.webdriver import firefox
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", help="input browser (chrome/firefoxf)")
+    parser.addoption("--browser", action="store", help="input browser (chrome/firefox)")
     
 
-def get_chrome_options():
-    options = chrome.options.Options()
-    #options.add_argument('--headless')
-    #options.add_argument('--disable-gpu')  
-    options.headles = True
-    return options
+#def get_chrome_options():
+#    options = chrome.options.Options()
+#    options.add_argument('--headless')
+#    options.add_argument('--disable-gpu')  
+#    options.headles = True
+#    return options
 
-def get_firefox_option():
-    options = firefox.options.Options()
-    options.headless = True
-    return options
+#def get_firefox_options():
+#    options = firefox.options.Options()
+#    options.headless = True
+#    return options
 
 def get_driver(input_params):
-    browsers = {"firefoxf": lambda : webdriver.Firefox(options=get_firefox_option()), "chrome": lambda : webdriver.Chrome(chrome_options=get_chrome_options())}
+    #firefox_options = firefox.options.Options()
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    browsers = {"firefox": lambda : webdriver.Firefox(), "chrome": lambda : webdriver.Chrome(chrome_options=options)}
     driver = browsers[input_params['browser']]()
     return driver
 

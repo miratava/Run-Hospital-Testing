@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver import chrome
 from selenium.webdriver import firefox
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.firefox.options import Options
 
 
 def pytest_addoption(parser):

@@ -22,7 +22,7 @@ def get_firefox_option():
     return options
 
 def get_driver(input_params):
-    browsers = {"firefoxf": lambda : webdriver.Firefox(options=get_firefox_option()), "chrome": lambda : webdriver.Chrome(chrome_options=get_chrome_options())}
+    browsers = {"firefox": lambda : webdriver.Firefox(options=get_firefox_option()), "chrome": lambda : webdriver.Chrome(chrome_options=get_chrome_options())}
     driver = browsers[input_params['browser']]()
     return driver
 

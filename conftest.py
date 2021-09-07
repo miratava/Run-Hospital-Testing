@@ -6,7 +6,7 @@ from selenium.webdriver import firefox
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", help="input browser (chrome/firefoxf)")
+    parser.addoption("--browser", action="store", help="input browser (chrome/firefox)")
     
 
 def get_chrome_options():

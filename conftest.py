@@ -10,23 +10,22 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", help="input browser (chrome/firefox)")
 
 
-def get_chrome_options():
+def get_chrome():
     options = chrome.options.Options()
     options.headless = True
-    return options
+    return webdriver.Chrome(options=options)
 
-def get_firefox_options():
+
+def get_firefox():
     #geckodriver_autoinstaller.install() 
+    geckodriver_autoinstaller.install()
     options = firefox.options.Options()
     options.headless = True
-    return options
+    return webdriver.Firefox(options=options)
+
 
 def get_needed_driver(input_params):
-    browsers = {"firefox": lambda : webdriver.Firefox(options=get_firefox_options()), "chrome": lambda : webdriver.Chrome(options=get_chrome_options())}
-    if input_params == "firefox":
-        geckodriver_autoinstaller.install()
-        #get_driver = GetGeckoDriver()
-        #get_driver.install()
+    browsers = {"firefox": get_firefox, "chrome": get_chrome}
     driver = browsers[input_params['browser']]()
     return driver
 
@@ -38,5 +37,5 @@ def params(request):
     if params['browser'] is None :
         params['browser'] = 'chrome'
     driver = get_needed_driver(params)
-    return driver
+
                                  

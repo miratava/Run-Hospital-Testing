@@ -1,4 +1,5 @@
 # conftest.py
+from _pytest.fixtures import fail_fixturefunc
 import pytest
 from selenium import webdriver
 from selenium.webdriver import chrome
@@ -17,25 +18,20 @@ def get_chrome():
 
 
 def get_firefox():
-    #geckodriver_autoinstaller.install() 
     geckodriver_autoinstaller.install()
     options = firefox.options.Options()
     options.headless = True
     return webdriver.Firefox(options=options)
 
 
-def get_needed_driver(input_params):
-    browsers = {"firefox": get_firefox, "chrome": get_chrome}
-    driver = browsers[input_params['browser']]()
-    return driver
-
-
 @pytest.fixture
 def params(request):
     params = {}
     params['browser'] = request.config.getoption('--browser')
-    if params['browser'] is None :
-        params['browser'] = 'chrome'
-    driver = get_needed_driver(params)
+    param = params['browser']
+    if param is None or param == 'chrome':
+        return get_chrome()
+    elif param == 'firefox':
+        return get_firefox()
 
                                  

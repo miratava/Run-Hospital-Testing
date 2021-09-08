@@ -3,9 +3,8 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver import chrome
 from selenium.webdriver import firefox
-from get_gecko_driver import GetGeckoDriver
-
-
+#from get_gecko_driver import GetGeckoDriver
+import geckodriver_autoinstaller
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", help="input browser (chrome/firefox)")
@@ -25,8 +24,9 @@ def get_firefox_options():
 def get_needed_driver(input_params):
     browsers = {"firefox": lambda : webdriver.Firefox(options=get_firefox_options()), "chrome": lambda : webdriver.Chrome(options=get_chrome_options())}
     if input_params == "firefox":
-        get_driver = GetGeckoDriver()
-        get_driver.install()
+        geckodriver_autoinstaller.install()
+        #get_driver = GetGeckoDriver()
+        #get_driver.install()
     driver = browsers[input_params['browser']]()
     return driver
 

@@ -14,6 +14,7 @@ def pytest_addoption(parser):
 def get_chrome():
     options = chrome.options.Options()
     options.headless = True
+    #options.add_argument("--no-sandbox")
     return webdriver.Chrome(options=options)
 
 

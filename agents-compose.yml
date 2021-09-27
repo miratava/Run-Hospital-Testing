@@ -1,0 +1,36 @@
+version: '3'
+services:
+  agent_1:
+    image: miratava/teamcity-agent
+    environment:
+     - SERVER_URL=192.168.1.116:8111
+    security_opt:
+     - seccomp=/home/miratava/work/google_chrome.json
+    tty: true
+    volumes:
+     - allure-results:/home/buildagent/work/allure-results 
+
+  agent_2:
+    image: miratava/teamcity-agent
+    environment:
+     - SERVER_URL=192.168.1.116:8111
+    security_opt:
+     - seccomp=/home/miratava/work/google_chrome.json
+    tty: true
+    volumes:
+     - allure-results:/home/buildagent/work/allure-results
+  
+  agent_3:
+    image: miratava/teamcity-agent
+    environment:
+     - SERVER_URL=192.168.1.116:8111
+     - AGENT_NAME=main_agent
+    security_opt:
+     - seccomp=/home/miratava/work/google_chrome.json
+    tty: true
+    volumes:
+     - allure-results:/home/buildagent/work/allure-results 
+
+volumes:
+ allure-results:
+  driver: local  

@@ -61,19 +61,21 @@ class Connection:
         agent.set_ip(str(agent_ip))
         return
 
-    def post_argument(self, url, data):
+    def post_parameter(self, url, data):
         r = requests.post(url, headers=self.teamcity_headers, data=data)
         return r.text
 
-    def post_ip_as_arguments(self):
+    def post_ip_as_parameters(self):
         main_agent_name = "main_agent"
+        agent_number = 1
         for agent in self.agents:
             self.get_agent_ip(agent)
             if re.match(main_agent_name, agent.get_name()):
                 continue
             else:
-                payload = '<property name="agent' + agent.get_id() + '" value="' + str(agent.get_ip()) + '"/>'
-                response = self.post_argument(self.parameters_url, data=payload)
+                payload = '<property name="agent' + str(agent_number) + '" value="' + str(agent.get_ip()) + '"/>'
+                response = self.post_parameter(self.parameters_url, data=payload)
+                agent_number += 1
                 print(response)
         return
 
@@ -81,7 +83,7 @@ class Connection:
 def main():
     connection = Connection()
     connection.map_agent_from_xml()
-    connection.post_ip_as_arguments()
+    connection.post_ip_as_parameters()
 
 
 main()

@@ -73,11 +73,13 @@ class Connection:
             if re.match(main_agent_name, agent.get_name()):
                 continue
             else:
-                payload = '<property name="agent' + str(agent_number) + '" value="' + str(agent.get_ip()) + '"/>'
+                payload = '<property name="agent_' + str(agent_number) + '" value="' + str(agent.get_ip()) + '"/>'
                 response = self.post_parameter(self.parameters_url, data=payload)
                 agent_number += 1
                 print(response)
         return
+
+
 
 
 def main():

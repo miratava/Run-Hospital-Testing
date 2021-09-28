@@ -75,8 +75,8 @@ class Connection:
             else:
                 payload = '<property name="agent_' + str(agent_number) + '" value="' + str(agent.get_ip()) + '"/>'
                 response = self.post_parameter(self.parameters_url, data=payload)
-                agent_number += 1
                 print(response)
+            agent_number += 1
         return
 
 

@@ -1,0 +1,63 @@
+package _Self.buildTypes
+
+import jetbrains.buildServer.configs.kotlin.v2019_2.*
+
+object StartOfTesting : BuildType({
+    name = "Start of testing"
+
+    params {
+        param("agent31", "172.24.0.3")
+        param("agent105", "172.18.0.3")
+        param("agent_1", "172.24.0.3")
+        param("agent32", "172.24.0.2")
+        param("agent_2", "172.24.0.2")
+        param("agent102", "192.168.240.2")
+        param("agent103", "192.168.240.3")
+    }
+
+    vcs {
+        root(HttpsGithubComMiratavaRunHospitalTestingRefsHeadsMaster)
+    }
+
+    steps {
+        dockerCompose {
+            name = "run agents"
+            enabled = false
+            file = "agents-compose.yml"
+            forcePull = true
+        }
+        python {
+            name = "set up parameters"
+            command = file {
+                filename = "setup_parameters.py"
+            }
+        }
+        python {
+            name = "divide for two flows"
+            executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE
+            command = custom {
+                arguments = """-m pytest -d  --tx socket=%agent_1%:8888 --tx socket=%agent_2%:8888 --rsyncdir=./ %system.teamcity.build.workingDir%/tests %system.teamcity.build.workingDir%/tests --alluredir=allure-results -k "invalid""""
+            }
+        }
+        step {
+            type = "allureReportGeneratorRunner"
+            executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE
+            param("allure.version", "/usr/share/allure")
+        }
+        script {
+            scriptContent = """
+                cp -r allure-results %system.agent.work.dir%
+                cp -r allure-report %system.agent.work.dir%
+            """.trimIndent()
+        }
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+
+    requirements {
+        startsWith("teamcity.agent.name", "main")
+    }
+})

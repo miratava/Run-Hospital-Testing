@@ -15,20 +15,20 @@ python3.9 \
 python3-pytest \
 python3-pip \
 python3-selenium \
+python3-requests \
 openjdk-8-jre-headless && \
 dpkg -i *.deb && \
 rm -rf *.deb && \
 pip3 install --system allure-pytest && \
-pip3 install --system pytest-xdist && \
-pip3 install --system requests
+pip3 install --system pytest-xdist 
 COPY run.sh /home/buildagent/
 RUN chmod a+x /home/buildagent/run.sh && \
 chmod -R 755 /usr/share/allure
 RUN echo 'buildagent ALL=NOPASSWD: /usr/bin/find, /usr/bin/sed' >> /etc/sudoers && \
 mv socketserver.py /home/buildagent/
 USER buildagent
-RUN pip3 install geckodriver-autoinstaller chromedriver-binary-auto declxml && \
-python3 -m pip install requests
+RUN PATH=/home/buildagent/.local/bin:$PATH && \
+pip3 install geckodriver-autoinstaller chromedriver-binary-auto declxml
 USER root
 CMD /home/buildagent/run.sh
 

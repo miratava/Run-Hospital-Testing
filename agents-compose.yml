@@ -1,9 +1,10 @@
 version: '3'
 services:
   agent_1:
-    image: miratava/teamcity-agent
+    image: miratava/teamcity-agent:3
     environment:
      - SERVER_URL=192.168.1.116:8111
+     - AGENT_NAME=
     security_opt:
      - seccomp=/home/miratava/work/google_chrome.json
     tty: true
@@ -11,9 +12,10 @@ services:
      - allure-results:/home/buildagent/work/allure-results 
 
   agent_2:
-    image: miratava/teamcity-agent
+    image: miratava/teamcity-agent:3
     environment:
      - SERVER_URL=192.168.1.116:8111
+     - AGENT_NAME=
     security_opt:
      - seccomp=/home/miratava/work/google_chrome.json
     tty: true
@@ -21,10 +23,11 @@ services:
      - allure-results:/home/buildagent/work/allure-results
   
   agent_3:
-    image: miratava/teamcity-agent
+    image: miratava/teamcity-agent:3
     environment:
      - SERVER_URL=192.168.1.116:8111
      - AGENT_NAME=main_agent
+
     security_opt:
      - seccomp=/home/miratava/work/google_chrome.json
     tty: true

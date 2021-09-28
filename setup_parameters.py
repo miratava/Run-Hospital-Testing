@@ -69,7 +69,7 @@ class Connection:
         main_agent_name = "main_agent"
         for agent in self.agents:
             self.get_agent_ip(agent)
-            if agent.get_name() == main_agent_name:
+            if re.match(main_agent_name, agent.get_name()):
                 continue
             else:
                 payload = '<property name="agent' + agent.get_id() + '" value="' + str(agent.get_ip()) + '"/>'

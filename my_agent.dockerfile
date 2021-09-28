@@ -19,13 +19,17 @@ openjdk-8-jre-headless && \
 dpkg -i *.deb && \
 rm -rf *.deb && \
 pip3 install --system allure-pytest && \
-pip3 install --system pytest-xdist
+pip3 install --system pytest-xdist && \
+pip3 install --system requests
 COPY run.sh /home/buildagent/
 RUN chmod a+x /home/buildagent/run.sh && \
 chmod -R 755 /usr/share/allure
 RUN echo 'buildagent ALL=NOPASSWD: /usr/bin/find, /usr/bin/sed' >> /etc/sudoers && \
-pip3 install geckodriver-autoinstaller chromedriver-binary-auto && \ 
-cp socketserver.py /home/buildagent/
+mv socketserver.py /home/buildagent/
+USER buildagent
+RUN pip3 install geckodriver-autoinstaller chromedriver-binary-auto declxml && \
+python3 -m pip install requests
+USER root
 CMD /home/buildagent/run.sh
 
 
